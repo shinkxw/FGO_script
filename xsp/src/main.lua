@@ -80,9 +80,9 @@ end
 function 体力不足() return 色彩判断(993, 243, 0x87684d) end
 
 function 补充体力()
-	if getColor(1055, 763) == 0x09fd05 then--有苹果吃苹果
+	if 色彩判断(1055, 763, 0x09fd05) then--有苹果吃苹果
 	  点击(1055, 763, 1000)
-	elseif getColor(1055, 524) == 0x09fd05 then--有石头吃石头
+	elseif 色彩判断(1055, 524, 0x09fd05) then--有石头吃石头
 		点击(1055, 524, 1000)
 	else--没石头退出挂机
 		lua_exit()
