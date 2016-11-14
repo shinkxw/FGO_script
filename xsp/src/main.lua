@@ -99,7 +99,7 @@ function 主函数(挂机次数, 自动补充体力)
 	sysLog("开始挂机")
 	hud = createHUD()
 	for i = 1, 挂机次数, 1 do
-		showHUD(hud, '第'..i..'次', 30, "0xffffffff", "0x00ffffff", 0, 50, 130, 228, 32)
+		showHUD(hud, '第'..i..'/'..挂机次数..'次', 30, "0xffffffff", "0x00ffffff", 0, 50, 130, 228, 32)
 		进本()
 		if 体力不足() then if 自动补充体力 then 补充体力() else lua_exit() end end
 		选择好友()
@@ -110,4 +110,4 @@ function 主函数(挂机次数, 自动补充体力)
 	mSleep(500)
 end
 
-主函数(50, true)
+主函数(999, true)
