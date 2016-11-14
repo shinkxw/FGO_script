@@ -1,10 +1,7 @@
+require "data"
 require "util"
 local bb = require("badboy")
 local json = bb.getJSON()
-local 战斗阶段判断 = {{1383,223},{1368,241},{1386,243}}
-local 英灵技能位置 = {111,259,410,615,768,917,1139,1273,1427}
-local 御主技能位置 = {{1447,686},{1596,688},{1740,692}}
-local 英灵选择位置 = {{537,965},{1048,906},{1546,925}}
 
 function 分辨率检测()
 	local 宽度, 高度 = getScreenSize()
@@ -36,7 +33,20 @@ function 御主技能(技能次序, 英灵次序)
 	点击(英灵位置[1], 英灵位置[2], 3000)
 end
 
-function 进本() 点击(1430, 538, 1800) end
+function 进本()
+	等待('选本')
+	点击(1430, 538)
+end
+
+function 选择好友()
+	等待('好友')
+	点击(1541, 693)
+end
+
+function 开始任务()
+	等待('队伍')
+	点击(1896, 1267)
+end
 
 function 战斗(阶段数)
 	while getColor(unpack(战斗阶段判断[阶段数])) == 0xffffff do
@@ -44,34 +54,30 @@ function 战斗(阶段数)
 		点击(221, 1042)
 		点击(1033, 1046)
 		点击(1880, 1013)
-		行动结束判断()
-	  mSleep(500)
-	end
-end
-
-function 行动结束判断()
-	while not 待命阶段() and not 结算阶段() do
-		mSleep(500)
+		等待('准备', '羁绊')
 	end
 end
 
 function 随便打()
-	行动结束判断()
+	等待('准备')
 	战斗(1)
 	战斗(2)
 	战斗(3)
 end
 
 function 结算()
-	mSleep(2000)
-	点击(221, 1042, 5000)
-	点击(221, 1042, 3000)
-	点击(1745, 1274, 10000)
+	等待('羁绊')
+	mSleep(1500)
+	点击(221, 1042)
+	等待('经验')
+	mSleep(1500)
+	点击(221, 1042)
+	等待('掉落')
+	mSleep(1500)
+	点击(1745, 1274)
 end
 
-function 体力不足() return getColor(993, 243) == 0x87684d end
-function 待命阶段() return getColor(1783, 1067) == 0x00e9fc end
-function 结算阶段() return getColor(136, 489) == 0xebbb26 end
+function 体力不足() return 色彩判断(993, 243, 0x87684d) end
 
 function 补充体力()
 	if getColor(1055, 763) == 0x09fd05 then--有苹果吃苹果
@@ -95,8 +101,8 @@ function 主函数(挂机次数, 自动补充体力)
 		showHUD(hud, '第'..i..'次', 30, "0xffffffff", "0x00ffffff", 0, 50, 130, 228, 32)
 		进本()
 		if 体力不足() then if 自动补充体力 then 补充体力() else lua_exit() end end
-		点击(1541, 693, 2500)--选择好友
-		点击(1896, 1267, 15000)--开始任务
+		选择好友()
+		开始任务()
 		随便打()
 		结算()
 	end
