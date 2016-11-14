@@ -43,24 +43,35 @@ function 战斗(阶段数)
 		点击(1810, 1133, 1800)
 		点击(221, 1042)
 		点击(1033, 1046)
-		点击(1880, 1013, 20000)
+		点击(1880, 1013)
+		行动结束判断()
+	  mSleep(500)
+	end
+end
+
+function 行动结束判断()
+	while not 待命阶段() and not 结算阶段() do
+		mSleep(500)
 	end
 end
 
 function 随便打()
+	行动结束判断()
 	战斗(1)
 	战斗(2)
 	战斗(3)
-	mSleep(3000)
 end
 
 function 结算()
+	mSleep(2000)
 	点击(221, 1042, 5000)
 	点击(221, 1042, 3000)
 	点击(1745, 1274, 10000)
 end
 
 function 体力不足() return getColor(993, 243) == 0x87684d end
+function 待命阶段() return getColor(1783, 1067) == 0x00e9fc end
+function 结算阶段() return getColor(136, 489) == 0xebbb26 end
 
 function 补充体力()
 	if getColor(1055, 763) == 0x09fd05 then--有苹果吃苹果
