@@ -36,6 +36,7 @@ end
 function 进本()
 	等待('选本')
 	点击(1430, 538)
+	mSleep(500)
 end
 
 function 选择好友()
