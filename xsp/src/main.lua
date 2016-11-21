@@ -78,7 +78,7 @@ function 结算()
 	点击(1745, 1274)
 end
 
-function 体力不足() return 色彩判断(993, 243, 0x87684d) end
+function 体力不足() return 色彩判断(571, 477, 0xa169cf) end
 
 function 补充体力()
 	if 色彩判断(1055, 763, 0x09fd05) then--有苹果吃苹果
