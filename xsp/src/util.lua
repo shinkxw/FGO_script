@@ -4,7 +4,7 @@ function 点击(x, y, 暂停长度)
 	x = x + math.random(-2, 2)
 	y = y + math.random(-2, 2)
 	touchDown(index, x, y)
-	mSleep(math.random(40, 60))                                --某些情况可能要增大延迟
+	mSleep(math.random(60, 80))                                --某些情况可能要增大延迟
 	touchUp(index, x, y)
 	暂停长度 = 暂停长度 or 60
 	mSleep(暂停长度)
@@ -15,6 +15,8 @@ function 色彩判断(x坐标, y坐标, 颜色)
 end
 
 function 状态判断(状态) return 色彩判断(unpack(阶段判断[状态])) end
+function 残血判断(次序) return not(色彩判断(unpack(血量判断[次序]))) end
+function 宝具判断(次序) return not(色彩判断(unpack(NP判断[次序]))) end
 
 function 多状态判断(状态数组)
 	for _, 状态 in ipairs(状态数组) do
@@ -24,7 +26,7 @@ end
 
 function 等待(...)
 	while not 多状态判断(arg) do
-		mSleep(500)
+		mSleep(300)
 	end
-	mSleep(500)
+	mSleep(800)
 end
