@@ -104,7 +104,10 @@ function 圣诞打()
 		if i == 4 then 御主技能(3, 1) end
 		if 有宝具(1) then--杰克有大
 			选择敌人(1)
-			英灵技能(1)
+			if 杰克技能 then
+				英灵技能(1)
+				杰克技能 = false
+			end
 			table.insert(色卡数组, 6)
 		end
 		if 有宝具(2) then
@@ -159,6 +162,7 @@ function 主函数(挂机次数)
 	sysLog("开始挂机")
 	hud = createHUD()
 	for i = 1, 挂机次数, 1 do
+		杰克技能 = true
 		是否治疗过 = false
 		showHUD(hud, '第'..i..'/'..挂机次数..'次', 30, "0xffffffff", "0x00ffffff", 0, 50, 130, 228, 32)
 		进本()
