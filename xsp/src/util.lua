@@ -27,11 +27,11 @@ end
 function 卡色判断()
 	卡色数组 = {}
 	for 索引, 坐标 in ipairs(卡色识别坐标) do
-		x, y = findColorInRegionFuzzy(0xfd0100, 80, 坐标[1], 坐标[2], 坐标[3], 坐标[4])
+		x, y = findColorInRegionFuzzy(0xfd0100, 75, 坐标[1], 坐标[2], 坐标[3], 坐标[4])
 		if x > -1 then
 			卡色数组[索引] = '红'
 		else
-			x, y = findColorInRegionFuzzy(0x055cff, 80, 坐标[1], 坐标[2], 坐标[3], 坐标[4])
+			x, y = findColorInRegionFuzzy(0x055cff, 75, 坐标[1], 坐标[2], 坐标[3], 坐标[4])
 			if x > -1 then
 				卡色数组[索引] = '蓝'
 			else
@@ -56,28 +56,12 @@ function 有(卡色数组, 颜色)
 	return false
 end
 
-function 回蓝(卡色数组, 色卡数组)--蓝绿红
-	for 次序, 卡色 in ipairs(卡色数组) do
-		if 卡色 == '蓝' then table.insert(色卡数组, 次序)  end
-	end
-	for 次序, 卡色 in ipairs(卡色数组) do
-		if 卡色 == '绿' then table.insert(色卡数组, 次序)  end
-	end
-	for 次序, 卡色 in ipairs(卡色数组) do
-		if 卡色 == '红' then table.insert(色卡数组, 次序)  end
-	end
-	return 色卡数组
-end
-
-function 首红(卡色数组, 色卡数组)--红蓝绿
-	for 次序, 卡色 in ipairs(卡色数组) do
-		if 卡色 == '红' then table.insert(色卡数组, 次序)  end
-	end
-	for 次序, 卡色 in ipairs(卡色数组) do
-		if 卡色 == '蓝' then table.insert(色卡数组, 次序)  end
-	end
-	for 次序, 卡色 in ipairs(卡色数组) do
-		if 卡色 == '绿' then table.insert(色卡数组, 次序)  end
+function 选卡(卡色数组, 卡色优先级, 色卡数组)
+	色卡数组 = 色卡数组 or {}
+	for 次序, 颜色 in ipairs(卡色优先级) do
+		for 次序, 卡色 in ipairs(卡色数组) do
+			if 卡色 == 颜色 then table.insert(色卡数组, 次序)  end
+		end
 	end
 	return 色卡数组
 end
