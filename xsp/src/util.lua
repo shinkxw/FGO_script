@@ -16,12 +16,20 @@ end
 
 function 状态判断(状态) return 色彩判断(unpack(阶段判断[状态])) end
 function 残血判断(次序) return not(色彩判断(unpack(血量判断[次序]))) end
-function 有宝具(次序) return not(色彩判断(unpack(NP判断[次序]))) end
+function 有宝具(次序)
+	坐标 = NP判断[次序]
+	x, y = findColorInRegionFuzzy(0x151514, 95, 坐标[1], 坐标[2], 坐标[3], 坐标[4])
+	if x > -1 then
+		return false
+	else
+		return true
+	end
+end
 
 function 多状态判断(状态数组)
 	for _, 状态 in ipairs(状态数组) do
 		if 状态判断(状态) then return true end
-	end 
+	end
 end
 
 function 卡色判断()
@@ -31,7 +39,7 @@ function 卡色判断()
 		if x > -1 then
 			卡色数组[索引] = '红'
 		else
-			x, y = findColorInRegionFuzzy(0x055cff, 75, 坐标[1], 坐标[2], 坐标[3], 坐标[4])
+			x, y = findColorInRegionFuzzy(0x055cff, 70, 坐标[1], 坐标[2], 坐标[3], 坐标[4])
 			if x > -1 then
 				卡色数组[索引] = '蓝'
 			else
